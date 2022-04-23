@@ -11,7 +11,7 @@ SECRET_KEY = "django-insecure-4npd(19q7sz!@j-u(y#gbb=4x=bq-dytccguiu7134r$3ko&=*
 DEBUG = True
 
 # Custom Auth Model
-AUTH_USER_MODEL: str = "customers.CustomUser"
+AUTH_USER_MODEL = "customers.CustomUser"
 
 ALLOWED_HOSTS = []
 
@@ -23,7 +23,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
+    # Package Dependencies
+    'django.contrib.sites',
+    
     # Third party apps
+    'rest_framework',
+    'rest_framework.authtoken',
+    
     # Local apps
     "customers",
 ]
@@ -113,7 +120,7 @@ REST_FRAMEWORK = {
 }
 
 # Simple JWT Package settings
-SIMPLE_JWT: dict = {
+SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=15),
     "ROTATE_REFRESH_TOKENS": False,
