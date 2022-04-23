@@ -1,3 +1,4 @@
+from datetime import date, timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -8,6 +9,9 @@ SECRET_KEY = "django-insecure-4npd(19q7sz!@j-u(y#gbb=4x=bq-dytccguiu7134r$3ko&=*
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+# Custom Auth Model
+AUTH_USER_MODEL: str = "customers.CustomUser"
 
 ALLOWED_HOSTS = []
 
@@ -96,13 +100,24 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
 STATIC_URL = "static/"
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Rest Framework configs
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+# Simple JWT Package settings
+SIMPLE_JWT: dict = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=15),
+    "ROTATE_REFRESH_TOKENS": False,
+    "AUTH_HEADER_TYPES": ("Bearer",),
+    "SIGNING_KEY": SECRET_KEY,
+    "AUTH_TOKEN_CLASSSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+}
