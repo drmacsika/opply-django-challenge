@@ -47,10 +47,10 @@ class Product(BaseModel):
         Checks if any of the products in the order are out of stock.
         """
         return self.out_of_stock
-    
+
     def insufficient_quantity(self, quantity):
         """
-        Checks if the quantity of the product 
+        Checks if the quantity of the product
         is less than the given quantity.
         """
         return self.quantity < quantity
@@ -62,7 +62,6 @@ class Product(BaseModel):
         if not self.insufficient_quantity(quantity):
             self.quantity -= quantity
             self.save()
-            
 
 
 class Order(BaseModel):
@@ -102,7 +101,7 @@ def update_out_of_stock(sender, instance, **kwargs):
     """
     Updates the out_of_stock field of the product
     when the quantity is updated.
-    
+
     Useful when you want to send an email to the admin
     to notify that a product is out of stock.
     """

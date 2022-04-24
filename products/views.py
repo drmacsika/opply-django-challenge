@@ -1,6 +1,5 @@
-
 from core.pagination import CustomPagination
-from rest_framework import generics, mixins, pagination, permissions, viewsets
+from rest_framework import mixins, permissions, viewsets
 
 from .models import Order, Product
 from .serializers import OrderSerializer, ProductSerializer

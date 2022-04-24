@@ -2,15 +2,14 @@ from core.pagination import CustomPagination
 from django.contrib.auth import get_user_model
 from products.models import Order
 from products.serializers import CustomerOrderHistorySerializer
-from rest_framework import generics, mixins, permissions, status, viewsets
+from rest_framework import mixins, permissions, viewsets
 
 from .serializers import UserSerializer
 
 User = get_user_model()
 
 
-class CreateCustomerViewset(mixins.CreateModelMixin,
-                            viewsets.GenericViewSet):
+class CreateCustomerViewset(mixins.CreateModelMixin, viewsets.GenericViewSet):
     """
     POST: Create a new customer
     """
@@ -19,8 +18,7 @@ class CreateCustomerViewset(mixins.CreateModelMixin,
     serializer_class = UserSerializer
 
 
-class CustomerOrderHistoryViewset(mixins.ListModelMixin,
-                                  viewsets.GenericViewSet):
+class CustomerOrderHistoryViewset(mixins.ListModelMixin, viewsets.GenericViewSet):
     """
     GET: Get a customer's order history
     """
@@ -29,8 +27,7 @@ class CustomerOrderHistoryViewset(mixins.ListModelMixin,
     serializer_class = CustomerOrderHistorySerializer
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = CustomPagination
-    
-    
+
     def get_queryset(self):
         """
         Return objects for each authenticated user

@@ -1,5 +1,4 @@
 from rest_framework.permissions import (
-    AllowAny,
     BasePermission,
     IsAdminUser,
     IsAuthenticated,
