@@ -1,27 +1,41 @@
+from core.pagination import CustomPagination
 from django.contrib.auth import get_user_model
-from django.shortcuts import render
-from rest_framework import generics, permissions, status, viewsets
+from products.models import Order
+from products.serializers import CustomerOrderHistorySerializer
+from rest_framework import generics, mixins, permissions, status, viewsets
 
-from .serializers import CustomerSerializer
+from .serializers import UserSerializer
 
 User = get_user_model()
 
 
-class CreateCustomerAPIView(generics.CreateAPIView):
+class CreateCustomerViewset(mixins.CreateModelMixin,
+                            viewsets.GenericViewSet):
     """
     POST: Create a new customer
     """
 
     queryset = User.objects.all()
-    serializer_class = CustomerSerializer
-    permission_classes = [permissions.AllowAny]  # Explicitly stated for reference
+    serializer_class = UserSerializer
 
 
-class GetCustomerOrderHistoryAPIView(generics.RetrieveAPIView):
+class CustomerOrderHistoryViewset(mixins.ListModelMixin,
+                                  viewsets.GenericViewSet):
     """
     GET: Get a customer's order history
     """
 
-    queryset = User.objects.all()
-    serializer_class = CustomerSerializer
-    permission_classes = [permissions.AllowAny]  # Explicitly stated for reference
+    queryset = Order.objects.all()
+    serializer_class = CustomerOrderHistorySerializer
+    permission_classes = [permissions.IsAuthenticated]
+    pagination_class = CustomPagination
+    
+    
+    def get_queryset(self):
+        """
+        Return objects for each authenticated user
+        """
+        user = self.request.user
+        if user.is_authenticated:
+            return Order.objects.filter(customer__username=user.username).all()
+        return Order.objects.none()

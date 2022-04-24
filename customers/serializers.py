@@ -1,11 +1,12 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.hashers import make_password
 from products.models import Order
 from rest_framework import serializers
 
-from .models import CustomUser
+User = get_user_model()
 
 
-class CustomerSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
 
     password = serializers.CharField(
         write_only=True,
@@ -16,20 +17,24 @@ class CustomerSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data["password"] = make_password(validated_data.get("password"))
-        return super(CustomerSerializer, self).create(validated_data)
+        return super(UserSerializer, self).create(validated_data)
 
     class Meta:
-        model = CustomUser
+        model = User
         fields = ("email", "username", "first_name", "last_name", "password")
 
 
-class SingleCustomerSerializer(serializers.ModelSerializer):
+class CustomerSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(required=True)
+    
     class Meta:
-        model = CustomUser
-        fields = ("id", "email", "username", "first_name", "last_name")
+        model = User
+        fields = ("username",)
+        
+    def validate_username(self, value):
+        try:
+            User.objects.get(username=value)
+        except User.DoesNotExist:
+            raise serializers.ValidationError(f"There's no user with the username '{value}'. Please register first.")
+        return value
 
-
-class CustomerOrderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Order
-        fields = ("id", "customer", "products")
