@@ -1,10 +1,8 @@
-from cgitb import lookup
 
-from rest_framework import generics, mixins, pagination, permissions, status, viewsets
+from core.pagination import CustomPagination
+from rest_framework import generics, mixins, pagination, permissions, viewsets
 
 from .models import Order, Product
-from .pagination import CustomPagination
-from .permissions import CustomPermission
 from .serializers import OrderSerializer, ProductSerializer
 
 
@@ -23,7 +21,7 @@ class ProductViewsets(
     permissions_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
-class OrdersViewset(
+class OrderViewset(
     mixins.CreateModelMixin,
     mixins.ListModelMixin,
     mixins.RetrieveModelMixin,
@@ -33,8 +31,8 @@ class OrdersViewset(
     GET: List all products, Get Single order with order_id
     POST: Create an order for products
 
-    Authenticated Customers can get a list of all orders
-    Authenticated Customers can get a single order with order_id
+    Authenticated Customers can get a list of all orders belonging to them
+    Authenticated Customers can get a single order with order_id belonging to them
     Authenticated Customers can create an order for products
     """
 
@@ -43,3 +41,12 @@ class OrdersViewset(
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = CustomPagination
     lookup_field = "order_id"
+
+    def get_queryset(self):
+        """
+        Return objects for each authenticated user
+        """
+        user = self.request.user
+        if user.is_authenticated:
+            return Order.objects.filter(customer__username=user.username).all()
+        return Order.objects.none()

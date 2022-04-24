@@ -41,23 +41,28 @@ class Product(BaseModel):
     def __repr__(self) -> str:
         return f"<Product {self.name}>"
 
+    @property
     def is_out_of_stock(self):
         """
         Checks if any of the products in the order are out of stock.
         """
         return self.out_of_stock
+    
+    def insufficient_quantity(self, quantity):
+        """
+        Checks if the quantity of the product 
+        is less than the given quantity.
+        """
+        return self.quantity < quantity
 
     def order_product(self, quantity):
         """
         Decrements the quantity of a product by the given quantity.
         """
-        if self.quantity >= quantity:
+        if not self.insufficient_quantity(quantity):
             self.quantity -= quantity
             self.save()
-        else:
-            raise ValueError(
-                f"Not enough products in stock. Only {self.quantity} left."
-            )
+            
 
 
 class Order(BaseModel):
@@ -67,7 +72,7 @@ class Order(BaseModel):
     The id field is retained rather than overridden.
     We use a custom order_id field to track the order id.
 
-    Since the total_amount field is automatically calulated,
+    Since the total_amount field is automatically calculated,
     we set editable=False to avoid tampering with the data.
     """
 
@@ -97,6 +102,9 @@ def update_out_of_stock(sender, instance, **kwargs):
     """
     Updates the out_of_stock field of the product
     when the quantity is updated.
+    
+    Useful when you want to send an email to the admin
+    to notify that a product is out of stock.
     """
     if not instance.out_of_stock:
         if instance.quantity < 1:
