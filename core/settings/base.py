@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     # Third party apps
     "rest_framework",
     "rest_framework.authtoken",
+    'drf_spectacular',
     # Local apps
     "customers",
     "products",
@@ -117,6 +118,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 # Simple JWT Package settings
@@ -127,4 +129,12 @@ SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("Bearer",),
     "SIGNING_KEY": SECRET_KEY,
     "AUTH_TOKEN_CLASSSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+}
+
+# Drf Spectacular settings
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Opply Technical Challenge API Doc',
+    'DESCRIPTION': 'This is the API documentation for the Opply Technical Challenge',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
 }
