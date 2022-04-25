@@ -19,7 +19,7 @@ Table of Contents:
 - JWT Token Authentication
 - Django Debug Toolkit
 - API Documentation with Swagger UI and Redoc
-- Testing for testing.
+- Model model for generating tests fixtures and data.
 
 ## Installation and Usage
 
@@ -61,7 +61,7 @@ ${HOST} is the address of the local host or the server where it is hosted.
 | ------------- |:-------------:| -----:| :-------------: |
 | ${HOST}/api/customers/new | False | POST | Create a new user as a customer |
 | ${HOST}/api/customers/login | False |   POST | Generate an access and refresh JWT token for authentication and authorization |
-| ${HOST}/api/customers/refresh | True | POST | Generate a new access token using the expired access token. |
+| ${HOST}/api/customers/refresh | True | POST | Generate a new access token using a refresh token. |
 | ${HOST}/api/products/ | False | GET | List all available products in a paginated format.
 | ${HOST}/api/products/{id}/ | False | GET | Get single product using the id.|
 | ${HOST}/api/products/orders/ | True  | GET | Get a list of orders pertaining to a customer |
