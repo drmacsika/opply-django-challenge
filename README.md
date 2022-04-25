@@ -10,7 +10,7 @@ Table of Contents:
 - [Pagination](#pagination)
 - [Admin](#admin)
 - [Project Limitations](#project-limitations)
-- [Deployment Guide](#deployment-guide)
+- [Deployment Guide](#deploying-to-heroku)
 
 ## Tools
 
