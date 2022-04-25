@@ -2,15 +2,15 @@
 
 Table of Contents:
 - [Tools](#tools)
-- [Installation and Usage](#installation)
-- [Authentication and Authorization](#authentication)
-- [Steps on How to Authenticate](#authentication-steps)
+- [Installation and Usage](#installation-and-usage)
+- [Authentication and Authorization](#authentication-and-authorization)
+- [Steps on How to Authenticate](#steps-on-how-to-authenticate)
 - [Guide on Endpoint Usage](#guide-on-endpoint-usage)
 - [API Documentation](#api-documentation)
 - [Pagination](#pagination)
 - [Admin](#admin)
 - [Project Limitations](#project-limitations)
-- [Deployment Guide](#deployment)
+- [Deployment Guide](#deployment-guide)
 
 ## Tools
 
