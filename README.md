@@ -54,7 +54,7 @@ E.g Authorization: `Bearer <access_token>`
 
 
 ## Guide on Endpoint Usage
-There are currently 8 active endpoints.
+There are currently 9 active endpoints.
 ${HOST} is the address of the local host or the server where it is hosted. 
 
 | Endpoints       | Authentication Required         | Method(s)  | Action | 
@@ -65,6 +65,7 @@ ${HOST} is the address of the local host or the server where it is hosted.
 | ${HOST}/api/products/ | False | GET | List all available products in a paginated format.
 | ${HOST}/api/products/{id}/ | False | GET | Get single product using the id.|
 | ${HOST}/api/products/orders/ | True  | GET | Get a list of orders pertaining to a customer |
+| ${HOST}/api/products/orders/ | True  | POST | Create an order for a product |
 | ${HOST}/api/products/orders/{order_id}/ | True  | GET | Get a single order using the order_id |
 | ${HOST}/api/customers/order-history/ | True | GET | Get the order history of an authenticated customer |
 
