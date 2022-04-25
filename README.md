@@ -27,8 +27,8 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) for installation.
 
 - Clone this repo
 - Set up and activate a Python virtual environment with ```python3 -m venv venv```
-- Navigate to the **src** directory 
-- Create a **.env** file in the **src** folder add a secret key parameter e.g: SECRET_KEY=very_secure_randomly_generated_key
+- Navigate to the **src** directory where manage.py is located.
+- Create a **.env** file in the **src** folder, add a secret key parameter e.g: SECRET_KEY=very_secure_randomly_generated_key
 - Run ```pip install requirements.txt```, you can also use the requirements files in the requirements folder within the core directory.
 - Run ```python manage.py makemigrations```
 - Run ```python manage.py migrate```
